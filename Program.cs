@@ -1,6 +1,3 @@
-using Microsoft.EntityFrameworkCore;
-using URLShortenerApp.Data;
-
 namespace URLShortenerApp
 {
     public class Program
@@ -12,8 +9,9 @@ namespace URLShortenerApp
 			// Add services to the container.
 			builder.Services.AddAppDbContext(builder.Configuration);
 			builder.Services.AddControllersWithViews();
+            builder.Services.AddAppServices();
 
-            var app = builder.Build();
+			var app = builder.Build();
 
             // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())
