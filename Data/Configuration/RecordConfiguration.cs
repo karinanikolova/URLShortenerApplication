@@ -13,6 +13,9 @@ namespace URLShortenerApp.Data.Configuration
 				.WithMany(u => u.Records)
 				.HasForeignKey(r => r.URLId)
 				.OnDelete(DeleteBehavior.Restrict);
+
+			// Seeding initial data for Records
+			builder.HasData(DataSeed.Records);
 		}
 	}
 }
