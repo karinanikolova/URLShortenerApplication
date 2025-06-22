@@ -6,6 +6,7 @@
 		{
 			// Different for each browser, but generally accepted maximum length for URLs
 			public const int OriginalUrlMaxLength = 2048;
+			public const int OriginalUrlMinLength = 5;
 
 			public const int ShortenedUrlMaxLength = 20;
 		}
