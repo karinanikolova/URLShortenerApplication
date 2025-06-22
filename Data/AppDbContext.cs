@@ -18,6 +18,7 @@ namespace URLShortenerApp.Data
 		{
 			base.OnModelCreating(builder);
 
+			// Applying configurations for URL and Record entities
 			builder.ApplyConfiguration<URL>(new URLConfiguration());
 			builder.ApplyConfiguration<Record>(new RecordConfiguration());
 		}
