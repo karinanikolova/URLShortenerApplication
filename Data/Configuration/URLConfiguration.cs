@@ -8,7 +8,13 @@ namespace URLShortenerApp.Data.Configuration
 	{
 		public void Configure(EntityTypeBuilder<URL> builder)
 		{
-			
+			// Indexing the ShortenedUrl for faster lookups
+			builder
+				.HasIndex(u => u.ShortenedUrl)
+				.IsUnique();
+
+			// Seeding initial data for URLs
+			builder.HasData(DataSeed.URLs);
 		}
 	}
 }
