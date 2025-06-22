@@ -1,24 +1,43 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using URLShortenerApp.Models;
+using URLShortenerApp.Models.URL;
+using URLShortenerApp.Services.Contracts;
 
 namespace URLShortenerApp.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly IUrlService _urlService;
 
-        public HomeController(ILogger<HomeController> logger)
+		public HomeController(ILogger<HomeController> logger, IUrlService urlService)
         {
             _logger = logger;
-        }
+			_urlService = urlService;
+		}
 
-        public IActionResult Index()
+        [HttpGet]
+		public async Task<IActionResult> Index()
         {
-            return View();
+            return View(new URLAddModel());
         }
 
-        public IActionResult Privacy()
+		[HttpPost]
+		public async Task<IActionResult> Index(URLAddModel model)
+		{
+			// To be implemented: Check if the URL already exists in the database
+			if (!ModelState.IsValid)
+			{
+				return View(model);
+			}
+
+            await _urlService.AddUrl(model.Url);
+
+			return Ok();
+		}
+
+		public IActionResult Privacy()
         {
             return View();
         }
