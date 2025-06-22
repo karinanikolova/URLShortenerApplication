@@ -1,8 +1,19 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@model URLAddModel
+
+@{
+    ViewData["Title"] = "Welcome to the URL Shortener App!";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<h2 class="text-center">@ViewData["Title"]</h2>
+<hr />
+
+<form method="post" class="row g-3">
+    <div class="col-auto">
+        <label asp-for="Url" class="form-label">Enter a long URL</label>
+        <input asp-for="Url" type="text" class="form-control" id="longUrl" placeholder="https://example.com/">
+        <span asp-validation-for="Url" class="text-danger"></span>
+    </div>
+    <div class="col-auto">
+        <input class="btn btn-primary mb-3" type="submit" value="Shorten URL" />
+    </div>
+</form>
