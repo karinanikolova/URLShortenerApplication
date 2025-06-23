@@ -7,13 +7,23 @@
 <h2 class="text-center">@ViewData["Title"]</h2>
 <hr />
 
-<form method="post" class="row g-3">
+<form id="urlForm" method="post" class="row g-3" asp-action="Index" asp-controller="Home">
     <div class="col-auto">
         <label asp-for="Url" class="form-label">Enter a long URL</label>
-        <input asp-for="Url" type="text" class="form-control" id="longUrl" placeholder="https://example.com/">
+        <input asp-for="Url" type="text" class="form-control" placeholder="https://example.com/">
         <span asp-validation-for="Url" class="text-danger"></span>
     </div>
     <div class="col-auto">
-        <input class="btn btn-primary mb-3" type="submit" value="Shorten URL" />
+        <button type="submit" class="btn btn-primary mt-2">Shorten URL</button>
     </div>
 </form>
+
+<div id="result" class="mt-3" style="display:none;">
+    <p><strong>Original URL:</strong> <a href="#" id="originalUrl" target="_blank"></a></p>
+    <p><strong>Shortened URL:</strong> <a href="#" id="shortenedUrl" target="_blank"></a></p>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script src="~/js/index.js"></script>
+}
