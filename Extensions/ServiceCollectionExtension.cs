@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Cors.Infrastructure;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using URLShortenerApp.Data;
 using URLShortenerApp.Data.Utilities;
 using URLShortenerApp.Data.Utilities.Contracts;
@@ -27,6 +26,7 @@ namespace Microsoft.Extensions.DependencyInjection
 		{
 			// Adding custom services to the Inversion of Control container.
 			services.AddScoped<IUrlService, UrlService>();
+			services.AddSingleton<ITldService, TldService>();
 
 			return services;
 		}
