@@ -1,7 +1,13 @@
-﻿namespace URLShortenerApp.Services.Contracts
+﻿using URLShortenerApp.Models.URL;
+
+namespace URLShortenerApp.Services.Contracts
 {
 	public interface IUrlService
 	{
-		Task AddUrl(string url);
+		Task AddUrlAsync(string url);
+
+		Task<bool> OriginalUrlExistsAsync(string url);
+
+		Task<URLViewModel> GetUrlViewModelByOriginalUrlAsync(string url);
 	}
 }
