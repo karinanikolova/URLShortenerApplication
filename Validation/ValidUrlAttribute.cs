@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using URLShortenerApp.Services.Contracts;
 
 namespace URLShortenerApp.Validation
 {
@@ -15,16 +16,22 @@ namespace URLShortenerApp.Validation
 
 			if (!input.StartsWith("http://", StringComparison.OrdinalIgnoreCase) && !input.StartsWith("https://", StringComparison.OrdinalIgnoreCase))
 			{
-				input = "http://" + input;
+				input = "https://" + input;
 			}
 
 			if (Uri.TryCreate(input, UriKind.Absolute, out var uriResult) &&
 				(uriResult.Scheme == Uri.UriSchemeHttp || uriResult.Scheme == Uri.UriSchemeHttps))
 			{
-				return ValidationResult.Success;
+				var tld = uriResult.Host.ToLowerInvariant().Split('.').LastOrDefault();
+				var tldService = (ITldService)validationContext.GetService(typeof(ITldService));
+
+				if (tld != null && tldService?.IsValidTld(tld) == true)
+				{
+					return ValidationResult.Success;
+				}
 			}
 
-			return new ValidationResult("Please enter a valid URL.");
+			return new ValidationResult("Please enter a valid URL with a recognized top-level domain.");
 		}
 	}
 }
