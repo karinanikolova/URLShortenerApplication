@@ -4,11 +4,12 @@ using URLShortenerApp.Data.Utilities;
 using URLShortenerApp.Data.Utilities.Contracts;
 using URLShortenerApp.Services;
 using URLShortenerApp.Services.Contracts;
+using URLShortenerApp.Validation;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
 	/// <summary>
-	/// Extension methods for IServiceCollection in order to keep the Program.cs file decluttered.
+	/// Extension methods for IServiceCollection in order to keep the Program.cs file decluttered and encapsulate related logic.
 	/// </summary>
 	public static class ServiceCollectionExtension
 	{
@@ -27,6 +28,17 @@ namespace Microsoft.Extensions.DependencyInjection
 			// Adding custom services to the Inversion of Control container.
 			services.AddScoped<IUrlService, UrlService>();
 			services.AddSingleton<ITldService, TldService>();
+
+			return services;
+		}
+
+		public static IServiceCollection AddRouteConfiguration(this IServiceCollection services)
+		{ 
+			// Adding custom route constraints to the Inversion of Control container.
+			services.Configure<RouteOptions>(options =>
+			{
+				options.ConstraintMap.Add("shortUrl", typeof(ShortUrlConstraint));
+			});
 
 			return services;
 		}
