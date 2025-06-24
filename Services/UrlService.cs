@@ -3,6 +3,7 @@ using System.Numerics;
 using System.Text;
 using URLShortenerApp.Data.Models;
 using URLShortenerApp.Data.Utilities.Contracts;
+using URLShortenerApp.Models.Statistics;
 using URLShortenerApp.Models.URL;
 using URLShortenerApp.Services.Contracts;
 
@@ -32,6 +33,41 @@ namespace URLShortenerApp.Services
 			await _repository.SaveChangesAsync();
 		}
 
+		public async Task<Guid> GetUrlIdByShortenedUrlAsync(string shortenedUrl) =>
+			await _repository.AllReadOnly<URL>()
+				.Where(u => u.ShortenedUrl == shortenedUrl)
+				.Select(u => u.Id)
+				.FirstOrDefaultAsync();
+
+		public async Task<UrlStatisticsViewModel> GetUrlStatisticsViewModelAsync(Guid urlId)
+		{
+			var recordViewModels = await _repository.AllReadOnly<Record>()
+				.Where(r => r.URLId == urlId)
+				.Select(r => new RecordViewModel()
+				{
+					UserIPAddress = r.UserIPAddress,
+					AccessDate = r.AccessDate.ToString()
+				})
+				.OrderByDescending(r => r.AccessDate)
+				.ToListAsync();
+
+			var top10Users = recordViewModels
+				.GroupBy(r => r.UserIPAddress)
+				.Select(r => new IpVisitSummary() {
+					UserIPAddress = r.Key,
+					VisitsCount = r.Count()
+				})
+				.OrderByDescending(x => x.VisitsCount)
+				.Take(10)
+				.ToList();
+
+			return new UrlStatisticsViewModel()
+			{
+				RecordsPerUserPerDay = recordViewModels,
+				Top10Users = top10Users
+			};
+		}
+
 		public async Task<URLViewModel> GetUrlViewModelByOriginalUrlAsync(string url) =>
 			await _repository.AllReadOnly<URL>()
 				.Where(u => u.OriginalUrl == url)
@@ -42,10 +78,32 @@ namespace URLShortenerApp.Services
 				})
 				.FirstOrDefaultAsync();
 
+		public async Task<bool> HasUrlOpenBeenRecordedTodayAsync(Guid urlId, string ipAddress, DateTime dateTimeToday) =>
+			await _repository.AllReadOnly<Record>()
+				.AnyAsync(r => r.URLId == urlId &&
+				r.AccessDate.Date == dateTimeToday.Date &&
+				r.UserIPAddress == ipAddress);
+
+		public async Task<bool> IsShortenedUrlValidAsync(string shortenedUrl) =>
+			await _repository.AllReadOnly<URL>()
+				.AnyAsync(u => u.ShortenedUrl == shortenedUrl);
 
 		public async Task<bool> OriginalUrlExistsAsync(string url) =>
 			await _repository.AllReadOnly<URL>()
 				.AnyAsync(u => u.OriginalUrl == url);
+
+		public async Task RecordUrlOpensAsync(Guid urlId, string ipAddress)
+		{
+			var record = new Record()
+			{
+				AccessDate = DateTime.UtcNow,
+				UserIPAddress = ipAddress,
+				URLId = urlId
+			};
+
+			await _repository.AddAsync<Record>(record);
+			await _repository.SaveChangesAsync();
+		}
 
 		private async Task<string> GenerateShortenedUrlAsync(string longUrl, int length = 10)
 		{
