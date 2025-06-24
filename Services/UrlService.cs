@@ -53,7 +53,7 @@ namespace URLShortenerApp.Services
 
 			var top10Users = recordViewModels
 				.GroupBy(r => r.UserIPAddress)
-				.Select(r => new IpVisitSummary() {
+				.Select(r => new IpVisitSummaryViewModel() {
 					UserIPAddress = r.Key,
 					VisitsCount = r.Count()
 				})
