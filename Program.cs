@@ -12,12 +12,12 @@ namespace URLShortenerApp
 			builder.Services.AddAppDbContext(builder.Configuration);
 			builder.Services.AddControllersWithViews();
             builder.Services.AddAppServices();
+            builder.Services.AddRouteConfiguration();
 
 			var app = builder.Build();
 
 			var tldService = app.Services.GetRequiredService<ITldService>();
 			await tldService.InitializeAsync();
-
 
 			// Configure the HTTP request pipeline.
 			if (!app.Environment.IsDevelopment())
