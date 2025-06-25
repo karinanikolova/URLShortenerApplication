@@ -1,1 +1,100 @@
 ﻿@model UrlStatisticsViewModel
+
+@{
+    ViewData["Title"] = "Secret Statistics Page";
+}
+
+<h2 class="text-center">@ViewData["Title"]</h2>
+<hr />
+
+<div class="container mt-4">
+
+    <div class="card mb-5 shadow-sm">
+        <div class="card-header bg-white">
+            <h4 class="mb-0 text-center">Unique Visits Per Day</h4>
+        </div>
+        <div class="card-body">
+            @if (!Model.UniqueVisitsPerDay.Any())
+            {
+                <p class="text-muted text-center">No visit records available.</p>
+            }
+            else
+            {
+                <div class="table-responsive">
+                    <table class="table table-hover text-center">
+                        <thead class="table-light">
+                            <tr>
+                                <th scope="col">IP Address</th>
+                                <th scope="col">Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var record in Model.UniqueVisitsPerDay)
+                            {
+                                <tr>
+                                    <td>@record.UserIPAddress</td>
+                                    <td>@record.AccessDate</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+        </div>
+    </div>
+
+    <div class="card shadow-sm">
+        <div class="card-header bg-primary text-white">
+            <h4 class="mb-0 text-center">Top 10 All-Time Visitors</h4>
+        </div>
+        <div class="card-body">
+            @if (!Model.Top10Users.Any())
+            {
+                <p class="text-muted text-center">No data available for top visitors.</p>
+            }
+            else
+            {
+                <div class="table-responsive">
+                    <table class="table table-bordered text-center">
+                        <thead class="table-primary">
+                            <tr>
+                                <th scope="col">IP Address</th>
+                                <th scope="col">Visit Count</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var visitor in Model.Top10Users)
+                            {
+                                <tr>
+                                    <td>@visitor.UserIPAddress</td>
+                                    <td>@visitor.VisitsCount</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+        </div>
+    </div>
+
+    <div class="card mt-5 shadow-sm">
+        <div class="card-header bg-info text-white text-center">
+            <h4 class="mb-0">Chart of Top 10 All-Time Visitors</h4>
+        </div>
+        <div class="card-body">
+            <canvas id="topVisitorsChart" width="400" height="200"></canvas>
+        </div>
+    </div>
+
+    @section Scripts {
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script src="~/js/stats.js" asp-append-version="true"></script>
+        <script>
+            const labels = @Html.Raw(Json.Serialize(Model.Top10Users.Select(x => x.UserIPAddress)));
+            const data = @Html.Raw(Json.Serialize(Model.Top10Users.Select(x => x.VisitsCount)));
+
+            getTopVisitorsChart(labels, data);
+        </script>
+    }
+
+</div>
