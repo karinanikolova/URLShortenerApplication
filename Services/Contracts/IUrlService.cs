@@ -13,7 +13,7 @@ namespace URLShortenerApp.Services.Contracts
 
 		Task<bool> IsShortenedUrlValidAsync(string shortenedUrl);
 
-		Task RecordUrlOpensAsync(Guid urlId, string ipAddress);
+		Task RecordUrlOpensAsync(Guid urlId, string ipAddress, DateTime accessDate);
 
 		Task<Guid> GetUrlIdByShortenedUrlAsync(string shortenedUrl);
 
