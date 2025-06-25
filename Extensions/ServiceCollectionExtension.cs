@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using URLShortenerApp.BackgroundServices;
 using URLShortenerApp.Data;
 using URLShortenerApp.Data.Utilities;
 using URLShortenerApp.Data.Utilities.Contracts;
@@ -28,6 +29,8 @@ namespace Microsoft.Extensions.DependencyInjection
 			// Adding custom services to the Inversion of Control container.
 			services.AddScoped<IUrlService, UrlService>();
 			services.AddSingleton<ITldService, TldService>();
+			services.AddSingleton<IUrlAccessQueue, UrlAccessQueue>();
+			services.AddHostedService<UrlAccessLoggingService>();
 
 			return services;
 		}
