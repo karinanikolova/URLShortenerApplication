@@ -1,7 +1,6 @@
-﻿function solution() {
-
-    const baseUrl = 'https://localhost:7193/';
-    const form = document.querySelector('#urlForm');
+﻿const form = document.querySelector('#urlForm');
+function solution() {
+    console.log('Form action is:', form.action);
 
     form.addEventListener('submit', formHandler);
 
@@ -29,22 +28,39 @@
             },
             body: bodyString
         })
-            .then(response => response.json())
+            .then(async response => {
+                if (!response.ok) {
+                    const errorData = await response.json();
+
+                    throw new Error(errorData.error || "Try again.");
+                }
+
+                return response.json();
+            })
             .then(data => {
                 const originalUrl = document.querySelector('#originalUrl');
+
+                originalUrl.textContent = "";
+                originalUrl.href = "";
+
                 originalUrl.textContent = data.originalUrl;
                 originalUrl.href = data.originalUrl;
 
                 const shortenedUrl = document.querySelector('#shortenedUrl');
-                shortenedUrl.textContent = baseUrl + data.shortenedUrl;
-                shortenedUrl.href = baseUrl + data.shortenedUrl;
+
+                shortenedUrl.textContent = "";
+                shortenedUrl.href = "";
+
+                shortenedUrl.textContent = form.action + data.shortenedUrl;
+                shortenedUrl.href = form.action + data.shortenedUrl;
 
                 document.querySelector('#result').style.display = 'block';
 
                 form.reset();
             })
             .catch(error => {
-                console.error('Error:', error);
+                console.error('Error:', error.message);
+                alert(error.message);
             });
     }
 }
