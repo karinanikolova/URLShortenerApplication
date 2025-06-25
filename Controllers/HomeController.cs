@@ -1,6 +1,4 @@
 using Microsoft.AspNetCore.Mvc;
-using System.Diagnostics;
-using URLShortenerApp.Models;
 using URLShortenerApp.Models.URL;
 using URLShortenerApp.Services.Contracts;
 
@@ -28,9 +26,14 @@ namespace URLShortenerApp.Controllers
 		{
 			if (!ModelState.IsValid)
 			{
-				return View(model);
+				var firstError = ModelState.Values.SelectMany(v => v.Errors)
+										  .Select(e => e.ErrorMessage)
+										  .FirstOrDefault();
+
+				return BadRequest(new { error = firstError ?? "Invalid input." });
 			}
 
+			// Should rewrite logic, because when you add a URL starting with "https", "www" will be added and so on.
 			if (!model.Url.StartsWith("www.", StringComparison.OrdinalIgnoreCase) && !model.Url.StartsWith("www.", StringComparison.OrdinalIgnoreCase))
 			{
 				model.Url = "www." + model.Url;
@@ -40,12 +43,13 @@ namespace URLShortenerApp.Controllers
 			{
 				model.Url = "https://" + model.Url;
 			}
+			//
 
 			if (!model.Url.EndsWith("/", StringComparison.OrdinalIgnoreCase))
 			{
 				model.Url = model.Url + "/";
 			}
-
+			
 			if (!await _urlService.OriginalUrlExistsAsync(model.Url))
 			{
 				await _urlService.AddUrlAsync(model.Url);
@@ -56,15 +60,16 @@ namespace URLShortenerApp.Controllers
 			return Json(urlViewModel);
 		}
 
-		public IActionResult Privacy()
-		{
-			return View();
-		}
-
 		[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-		public IActionResult Error()
+		public IActionResult Error(int statusCode)
 		{
-			return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+			if (statusCode == 404)
+			{
+				ViewData["StatusCode"] = statusCode;
+				return View("Error404");
+			}
+
+			return View();
 		}
 	}
 }
