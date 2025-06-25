@@ -2,43 +2,46 @@ using URLShortenerApp.Services.Contracts;
 
 namespace URLShortenerApp
 {
-    public class Program
-    {
-        public static async Task Main(string[] args)
-        {
-            var builder = WebApplication.CreateBuilder(args);
+	public class Program
+	{
+		public static async Task Main(string[] args)
+		{
+			var builder = WebApplication.CreateBuilder(args);
 
 			// Add services to the container.
 			builder.Services.AddAppDbContext(builder.Configuration);
 			builder.Services.AddControllersWithViews();
-            builder.Services.AddAppServices();
-            builder.Services.AddRouteConfiguration();
+			builder.Services.AddAppServices();
+			builder.Services.AddRouteConfiguration();
 
 			var app = builder.Build();
 
 			var tldService = app.Services.GetRequiredService<ITldService>();
 			await tldService.InitializeAsync();
 
-			// Configure the HTTP request pipeline.
-			if (!app.Environment.IsDevelopment())
-            {
-                app.UseExceptionHandler("/Home/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-                app.UseHsts();
-            }
+			if (app.Environment.IsDevelopment())
+			{
+				app.UseDeveloperExceptionPage();
+			}
+			else
+			{
+				app.UseExceptionHandler("/Home/Error");
+				app.UseStatusCodePagesWithReExecute("/Home/Error", "?statusCode={0}");
+				app.UseHsts();
+			}
 
-            app.UseHttpsRedirection();
-            app.UseStaticFiles();
+			app.UseHttpsRedirection();
+			app.UseStaticFiles();
 
-            app.UseRouting();
+			app.UseRouting();
 
-            app.UseAuthorization();
+			app.UseAuthorization();
 
-            app.MapControllerRoute(
-                name: "default",
-                pattern: "{controller=Home}/{action=Index}/{id?}");
+			app.MapControllerRoute(
+				name: "default",
+				pattern: "{controller=Home}/{action=Index}/{id?}");
 
-            await app.RunAsync();
-        }
-    }
+			await app.RunAsync();
+		}
+	}
 }
