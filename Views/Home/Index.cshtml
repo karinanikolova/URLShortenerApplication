@@ -1,29 +1,37 @@
 ﻿@model URLAddModel
 
 @{
-    ViewData["Title"] = "Welcome to the URL Shortener App!";
+	ViewData["Title"] = "Welcome to the URL Shortener App!";
 }
+<div class="container mt-5">
+	<div class="row justify-content-center">
+		<div class="col-md-8">
+			<div class="card shadow p-4" style="width: 100%; max-width: 800px;">
+				<div class="card-body">
+					<h2 class="card-title text-center mb-4">@ViewData["Title"]</h2>
 
-<h2 class="text-center">@ViewData["Title"]</h2>
-<hr />
+					<form id="urlForm" method="post" asp-action="Index" asp-controller="Home">
+						<div class="mb-3">
+							<label asp-for="Url" class="form-label">Enter a long URL</label>
+							<input asp-for="Url" type="text" class="form-control" placeholder="https://example.com/" />
+							<span asp-validation-for="Url" class="text-danger"></span>
+						</div>
+						<div class="text-center">
+							<button type="submit" class="btn btn-primary">Shorten URL</button>
+						</div>
+					</form>
 
-<form id="urlForm" method="post" class="row g-3" asp-action="Index" asp-controller="Home">
-    <div class="col-auto">
-        <label asp-for="Url" class="form-label">Enter a long URL</label>
-        <input asp-for="Url" type="text" class="form-control" placeholder="https://example.com/">
-        <span asp-validation-for="Url" class="text-danger"></span>
-    </div>
-    <div class="col-auto">
-        <button type="submit" class="btn btn-primary mt-2">Shorten URL</button>
-    </div>
-</form>
-
-<div id="result" class="mt-3" style="display:none;">
-    <p><strong>Original URL:</strong> <a href="#" id="originalUrl" target="_blank"></a></p>
-    <p><strong>Shortened URL:</strong> <a href="#" id="shortenedUrl" target="_blank"></a></p>
+					<div id="result" class="mt-4" style="display:none;">
+						<p><strong>Original URL:</strong> <a href="#" id="originalUrl" target="_blank"></a></p>
+						<p><strong>Shortened URL:</strong> <a href="#" id="shortenedUrl" target="_blank"></a></p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
 
 @section Scripts {
-    <partial name="_ValidationScriptsPartial" />
-    <script src="~/js/index.js"></script>
+	<partial name="_ValidationScriptsPartial" />
+	<script src="~/js/index.js"></script>
 }
