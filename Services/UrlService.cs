@@ -63,7 +63,7 @@ namespace URLShortenerApp.Services
 
 			return new UrlStatisticsViewModel()
 			{
-				RecordsPerUserPerDay = recordViewModels,
+				UniqueVisitsPerDay = recordViewModels,
 				Top10Users = top10Users
 			};
 		}
@@ -92,11 +92,11 @@ namespace URLShortenerApp.Services
 			await _repository.AllReadOnly<URL>()
 				.AnyAsync(u => u.OriginalUrl == url);
 
-		public async Task RecordUrlOpensAsync(Guid urlId, string ipAddress)
+		public async Task RecordUrlOpensAsync(Guid urlId, string ipAddress, DateTime accessDate)
 		{
 			var record = new Record()
 			{
-				AccessDate = DateTime.UtcNow,
+				AccessDate = accessDate,
 				UserIPAddress = ipAddress,
 				URLId = urlId
 			};
