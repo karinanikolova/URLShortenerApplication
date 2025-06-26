@@ -1,5 +1,8 @@
 ﻿namespace URLShortenerApp.Helpers
 {
+	/// <summary>
+	/// IpAddressHelper class provides methods to retrieve the IP address of the current request.
+	/// </summary>
 	public static class IpAddressHelper
 	{
 		/// <summary>
