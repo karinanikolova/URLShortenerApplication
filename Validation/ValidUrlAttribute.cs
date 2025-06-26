@@ -3,6 +3,9 @@ using URLShortenerApp.Services.Contracts;
 
 namespace URLShortenerApp.Validation
 {
+	/// <summary>
+	/// ValidUrlAttribute is a custom validation attribute that checks if a given URL is valid.
+	/// </summary>
 	public class ValidUrlAttribute : ValidationAttribute
 	{
 		protected override ValidationResult IsValid(object value, ValidationContext validationContext)
