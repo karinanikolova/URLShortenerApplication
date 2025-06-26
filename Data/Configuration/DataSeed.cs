@@ -53,7 +53,7 @@ namespace URLShortenerApp.Data.Configuration
 				new()
 				{
 					Id = SecondURLId,
-					OriginalUrl = "https://dev.bg/company/progress/",
+					OriginalUrl = "https://www.dev.bg/company/progress/",
 					ShortenedUrl = "BtGWzHZ96t",
 					CreationDate = DateTime.UtcNow.AddDays(-30)
 				},
