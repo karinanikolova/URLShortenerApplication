@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using URLShortenerApp.Helpers.Contracts;
 using URLShortenerApp.Models.URL;
 using URLShortenerApp.Services.Contracts;
 
@@ -8,11 +9,13 @@ namespace URLShortenerApp.Controllers
 	{
 		private readonly ILogger<HomeController> _logger;
 		private readonly IUrlService _urlService;
+		private readonly ICustomUrlHelper _customUrlHelper;
 
-		public HomeController(ILogger<HomeController> logger, IUrlService urlService)
+		public HomeController(ILogger<HomeController> logger, IUrlService urlService, ICustomUrlHelper customUrlHelper)
 		{
 			_logger = logger;
 			_urlService = urlService;
+			_customUrlHelper = customUrlHelper;
 		}
 
 		[HttpGet]
@@ -33,29 +36,23 @@ namespace URLShortenerApp.Controllers
 				return BadRequest(new { error = firstError ?? "Invalid input." });
 			}
 
-			// Should rewrite logic, because when you add a URL starting with "https", "www" will be added and so on.
-			if (!model.Url.StartsWith("www.", StringComparison.OrdinalIgnoreCase) && !model.Url.StartsWith("www.", StringComparison.OrdinalIgnoreCase))
+			string normalizedUrl;
+
+			try
 			{
-				model.Url = "www." + model.Url;
+				normalizedUrl = await _customUrlHelper.Normalize(model.Url);
+			}
+			catch (Exception ex)
+			{
+				return BadRequest(new { error = ex.Message });
 			}
 
-			if (!model.Url.StartsWith("http://", StringComparison.OrdinalIgnoreCase) && !model.Url.StartsWith("https://", StringComparison.OrdinalIgnoreCase))
+			if (!await _urlService.OriginalUrlExistsAsync(normalizedUrl))
 			{
-				model.Url = "https://" + model.Url;
-			}
-			//
-
-			if (!model.Url.EndsWith("/", StringComparison.OrdinalIgnoreCase))
-			{
-				model.Url = model.Url + "/";
-			}
-			
-			if (!await _urlService.OriginalUrlExistsAsync(model.Url))
-			{
-				await _urlService.AddUrlAsync(model.Url);
+				await _urlService.AddUrlAsync(normalizedUrl);
 			}
 
-			var urlViewModel = await _urlService.GetUrlViewModelByOriginalUrlAsync(model.Url);
+			var urlViewModel = await _urlService.GetUrlViewModelByOriginalUrlAsync(normalizedUrl);
 
 			return Json(urlViewModel);
 		}
