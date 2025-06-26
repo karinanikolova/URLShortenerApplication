@@ -3,6 +3,8 @@ using URLShortenerApp.BackgroundServices;
 using URLShortenerApp.Data;
 using URLShortenerApp.Data.Utilities;
 using URLShortenerApp.Data.Utilities.Contracts;
+using URLShortenerApp.Helpers;
+using URLShortenerApp.Helpers.Contracts;
 using URLShortenerApp.Services;
 using URLShortenerApp.Services.Contracts;
 using URLShortenerApp.Validation;
@@ -28,9 +30,12 @@ namespace Microsoft.Extensions.DependencyInjection
 		{
 			// Adding custom services to the Inversion of Control container.
 			services.AddScoped<IUrlService, UrlService>();
+
 			services.AddSingleton<ITldService, TldService>();
 			services.AddSingleton<IUrlAccessQueue, UrlAccessQueue>();
+
 			services.AddHostedService<UrlAccessLoggingService>();
+			services.AddHttpClient<ICustomUrlHelper, CustomUrlHelper>();
 
 			return services;
 		}
