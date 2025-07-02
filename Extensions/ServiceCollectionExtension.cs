@@ -45,7 +45,7 @@ namespace Microsoft.Extensions.DependencyInjection
 			// Adding custom route constraints to the Inversion of Control container.
 			services.Configure<RouteOptions>(options =>
 			{
-				options.ConstraintMap.Add("shortUrl", typeof(ShortUrlConstraint));
+				options.ConstraintMap.Add("secretUrl", typeof(SecretUrlConstraint));
 			});
 
 			return services;
