@@ -8,9 +8,9 @@ namespace URLShortenerApp.Data.Configuration
 	{
 		public void Configure(EntityTypeBuilder<URL> builder)
 		{
-			// Indexing the ShortenedUrl for faster lookups
+			// Indexing the SecretUrl for faster lookups
 			builder
-				.HasIndex(u => u.ShortenedUrl)
+				.HasIndex(u => u.SecretUrl)
 				.IsUnique();
 
 			// Seeding initial data for URLs
