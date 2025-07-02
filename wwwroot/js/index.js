@@ -1,6 +1,6 @@
 ﻿const form = document.querySelector('#urlForm');
+
 function solution() {
-    console.log('Form action is:', form.action);
 
     form.addEventListener('submit', formHandler);
 
@@ -53,6 +53,14 @@ function solution() {
 
                 shortenedUrl.textContent = form.action + data.shortenedUrl;
                 shortenedUrl.href = form.action + data.shortenedUrl;
+
+                const secretUrl = document.querySelector('#secretUrl');
+
+                secretUrl.textContent = "";
+                secretUrl.href = "";
+
+                secretUrl.textContent = form.action + data.secretUrl;
+                secretUrl.href = form.action + data.secretUrl;
 
                 document.querySelector('#result').style.display = 'block';
 
