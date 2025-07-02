@@ -47,21 +47,24 @@ namespace URLShortenerApp.Data.Configuration
 				{
 					Id = FirstURLId,
 					OriginalUrl = "https://www.progress.com/",
-					ShortenedUrl = "NlptN4Bw1P",
+					ShortenedUrl = "2af135",
+					SecretUrl = "NlptN4Bw1P",
 					CreationDate = DateTime.UtcNow.AddDays(-25)
 				},
 				new()
 				{
 					Id = SecondURLId,
-					OriginalUrl = "https://www.dev.bg/company/progress/",
-					ShortenedUrl = "BtGWzHZ96t",
+					OriginalUrl = "https://www.dev.bg/",
+					ShortenedUrl = "9329e2",
+					SecretUrl = "BtGWzHZ96t",
 					CreationDate = DateTime.UtcNow.AddDays(-30)
 				},
 				new()
 				{
 					Id = ThirdURLId,
 					OriginalUrl = "https://www.telerik.com/",
-					ShortenedUrl = "X9k2v3Q8yF",
+					ShortenedUrl = "9c13ca",
+					SecretUrl = "X9k2v3Q8yF",
 					CreationDate = DateTime.UtcNow.AddDays(-35)
 				}
 			});
