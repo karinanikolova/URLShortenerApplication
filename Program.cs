@@ -38,6 +38,11 @@ namespace URLShortenerApp
 			app.UseAuthorization();
 
 			app.MapControllerRoute(
+				name: "shortened",
+				pattern: "{shortenedUrl}",
+				defaults: new { controller = "Redirect", action = "RedirectTo" });
+
+			app.MapControllerRoute(
 				name: "default",
 				pattern: "{controller=Home}/{action=Index}/{id?}");
 
