@@ -20,22 +20,29 @@ namespace URLShortenerApp.Services
 			_repository = repository;
 		}
 
-		public async Task AddUrlAsync(string url)
+		public async Task AddUrlAsync(string url, DateTime creationDate)
 		{
 			var urlEntity = new URL()
 			{
 				OriginalUrl = url,
 				ShortenedUrl = await GenerateShortenedUrlAsync(url),
-				CreationDate = DateTime.UtcNow
+				SecretUrl = await GenerateSecretUrlAsync(url),
+				CreationDate = creationDate
 			};
 
 			await _repository.AddAsync<URL>(urlEntity);
 			await _repository.SaveChangesAsync();
 		}
 
-		public async Task<Guid> GetUrlIdByShortenedUrlAsync(string shortenedUrl) =>
+		public async Task<string> GetOriginalUrlByShortenedUrlAsync(string shortenedUrl) =>
 			await _repository.AllReadOnly<URL>()
 				.Where(u => u.ShortenedUrl == shortenedUrl)
+				.Select(u => u.OriginalUrl)
+				.FirstOrDefaultAsync();
+
+		public async Task<Guid> GetUrlIdBySecretUrlAsync(string secretUrl) =>
+			await _repository.AllReadOnly<URL>()
+				.Where(u => u.SecretUrl == secretUrl)
 				.Select(u => u.Id)
 				.FirstOrDefaultAsync();
 
@@ -46,7 +53,7 @@ namespace URLShortenerApp.Services
 				.Select(r => new RecordViewModel()
 				{
 					UserIPAddress = r.UserIPAddress,
-					AccessDate = r.AccessDate.ToString()
+					AccessDate = r.AccessDate.Date.ToString()
 				})
 				.OrderByDescending(r => r.AccessDate)
 				.ToListAsync();
@@ -68,13 +75,14 @@ namespace URLShortenerApp.Services
 			};
 		}
 
-		public async Task<URLViewModel> GetUrlViewModelByOriginalUrlAsync(string url) =>
+		public async Task<URLViewModel> GetUrlViewModelByUrlAndCreationDateAsync(string url, DateTime creationDate) =>
 			await _repository.AllReadOnly<URL>()
-				.Where(u => u.OriginalUrl == url)
+				.Where(u => u.OriginalUrl == url && u.CreationDate == creationDate)
 				.Select(u => new URLViewModel()
 				{
 					OriginalUrl = u.OriginalUrl,
-					ShortenedUrl = u.ShortenedUrl
+					ShortenedUrl = u.ShortenedUrl,
+					SecretUrl = u.SecretUrl
 				})
 				.FirstOrDefaultAsync();
 
@@ -84,9 +92,9 @@ namespace URLShortenerApp.Services
 				r.AccessDate.Date == dateTimeToday.Date &&
 				r.UserIPAddress == ipAddress);
 
-		public async Task<bool> IsShortenedUrlValidAsync(string shortenedUrl) =>
+		public async Task<bool> IsSecretUrlValidAsync(string secretUrl) =>
 			await _repository.AllReadOnly<URL>()
-				.AnyAsync(u => u.ShortenedUrl == shortenedUrl);
+				.AnyAsync(u => u.SecretUrl == secretUrl);
 
 		public async Task<bool> OriginalUrlExistsAsync(string url) =>
 			await _repository.AllReadOnly<URL>()
@@ -105,9 +113,28 @@ namespace URLShortenerApp.Services
 			await _repository.SaveChangesAsync();
 		}
 
-		private async Task<string> GenerateShortenedUrlAsync(string longUrl, int length = 10)
+		public async Task<Guid> GetUrlIdByShortenedUrlAsync(string shortenedUrl) =>
+			await _repository.AllReadOnly<URL>()
+				.Where(u => u.ShortenedUrl == shortenedUrl)
+				.Select(u => u.Id)
+				.FirstOrDefaultAsync();
+
+		private async Task<string> GenerateShortenedUrlAsync(string longUrl, int length = 6)
 		{
 			var shortenedUrl = string.Empty;
+
+			do
+			{
+				shortenedUrl = Guid.NewGuid().ToString().Substring(0, length);
+
+			} while (await ShortenedUrlExistsAsync(shortenedUrl));
+
+			return shortenedUrl;
+		}
+
+		private async Task<string> GenerateSecretUrlAsync(string longUrl, int length = 10)
+		{
+			var secretUrl = string.Empty;
 
 			do
 			{
@@ -133,15 +160,22 @@ namespace URLShortenerApp.Services
 					base62Url.Insert(0, Base62Chars[(int)remainder]);
 				}
 
-				// Taking the first N characters for the shortened URL
-				shortenedUrl = base62Url.ToString().Substring(0, length);
+				// Taking the first N characters for the secret URL
+				secretUrl = base62Url.ToString().Substring(0, length);
 
-			} while (await ShortenedUrlExistsAsync(shortenedUrl));
+			} while (await SecretUrlExistsAsync(secretUrl));
 
-			return shortenedUrl;
+			return secretUrl;
 		}
+
+
+		private async Task<bool> SecretUrlExistsAsync(string secretUrl) =>
+			await _repository.AllReadOnly<URL>()
+				.AnyAsync(u => u.SecretUrl == secretUrl);
+
 		private async Task<bool> ShortenedUrlExistsAsync(string shortenedUrl) =>
 			await _repository.AllReadOnly<URL>()
 				.AnyAsync(u => u.ShortenedUrl == shortenedUrl);
+
 	}
 }
