@@ -12,8 +12,8 @@ using URLShortenerApp.Data;
 namespace URLShortenerApp.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250622084958_InitialTablesCreation")]
-    partial class InitialTablesCreation
+    [Migration("20250702123128_DatabaseCreation")]
+    partial class DatabaseCreation
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -70,13 +70,22 @@ namespace URLShortenerApp.Migrations
                         .HasColumnType("nvarchar(2048)")
                         .HasComment("Original URL");
 
+                    b.Property<string>("SecretUrl")
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)")
+                        .HasComment("Secret URL");
+
                     b.Property<string>("ShortenedUrl")
                         .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)")
+                        .HasMaxLength(6)
+                        .HasColumnType("nvarchar(6)")
                         .HasComment("Shortened URL");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("SecretUrl")
+                        .IsUnique();
 
                     b.ToTable("URLs");
                 });
