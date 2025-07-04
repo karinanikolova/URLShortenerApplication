@@ -6,9 +6,11 @@ namespace URLShortenerApp.Data
 {
 	public class AppDbContext : DbContext
 	{
-		public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
-		{
+		private bool _shouldSeedDb;
 
+		public AppDbContext(DbContextOptions<AppDbContext> options, bool shouldSeedDb = true) : base(options)
+		{
+			_shouldSeedDb = shouldSeedDb;
 		}
 
 		public DbSet<URL> URLs { get; set; }
@@ -18,9 +20,12 @@ namespace URLShortenerApp.Data
 		{
 			base.OnModelCreating(builder);
 
-			// Applying configurations for URL and Record entities
-			builder.ApplyConfiguration<URL>(new URLConfiguration());
-			builder.ApplyConfiguration<Record>(new RecordConfiguration());
+			if (_shouldSeedDb)
+			{
+				// Applying configurations for URL and Record entities
+				builder.ApplyConfiguration<URL>(new URLConfiguration());
+				builder.ApplyConfiguration<Record>(new RecordConfiguration());
+			}
 		}
 	}
 }
