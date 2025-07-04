@@ -79,8 +79,6 @@ If you wish to run the application in production mode, you should hardcode or us
 
 3. Start the application. The migrations will be applied automatically beforehand and you will be able to see the database created locally with the client tool of your choice.
 
-4. Run the application.
-
 ## 💡 Features
 - URL input, normalization, and format validation
 - Generation of short URLs and secret statistics URLs
