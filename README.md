@@ -77,9 +77,7 @@ options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
 ```  
 If you wish to run the application in production mode, you should hardcode or use a production-safe configuration method in *ServiceCollectionExtension.cs*.
 
-3. Apply the migrations for database creation and data seeding:
-- If working with PMC, use *Update-Database* command
-- If working with .NET CLI, use *dotnet ef database update* command
+3. Start the application. The migrations will be applied automatically beforehand and you will be able to see the database created locally with the client tool of your choice.
 
 4. Run the application.
 
