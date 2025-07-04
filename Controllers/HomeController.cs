@@ -47,12 +47,9 @@ namespace URLShortenerApp.Controllers
 				return BadRequest(new { error = ex.Message });
 			}
 
-			if (!await _urlService.OriginalUrlExistsAsync(normalizedUrl))
-			{
-				await _urlService.AddUrlAsync(normalizedUrl);
-			}
+			await _urlService.AddUrlAsync(normalizedUrl, model.CreationDate);
 
-			var urlViewModel = await _urlService.GetUrlViewModelByOriginalUrlAsync(normalizedUrl);
+			var urlViewModel = await _urlService.GetUrlViewModelByUrlAndCreationDateAsync(normalizedUrl, model.CreationDate);
 
 			return Json(urlViewModel);
 		}

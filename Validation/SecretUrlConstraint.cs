@@ -5,7 +5,7 @@ namespace URLShortenerApp.Validation
 	/// <summary>
 	/// A custom route constraint that validates a short URL.
 	/// </summary>
-	public class ShortUrlConstraint : IRouteConstraint
+	public class SecretUrlConstraint : IRouteConstraint
 	{
 		// If the short URL is made to be generated with less or more than 10 alphanumeric characters,the regex should be updated.
 		private static readonly Regex _regex = new Regex("^[a-zA-Z0-9]{10}$", RegexOptions.Compiled); 

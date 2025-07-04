@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace URLShortenerApp.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialTablesCreation : Migration
+    public partial class DatabaseCreation : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -17,7 +17,8 @@ namespace URLShortenerApp.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false, comment: "URL identifier"),
                     OriginalUrl = table.Column<string>(type: "nvarchar(2048)", maxLength: 2048, nullable: false, comment: "Original URL"),
-                    ShortenedUrl = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false, comment: "Shortened URL"),
+                    ShortenedUrl = table.Column<string>(type: "nvarchar(6)", maxLength: 6, nullable: false, comment: "Shortened URL"),
+                    SecretUrl = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false, comment: "Secret URL"),
                     CreationDate = table.Column<DateTime>(type: "datetime2", nullable: false, comment: "URL creation date")
                 },
                 constraints: table =>
@@ -49,6 +50,12 @@ namespace URLShortenerApp.Migrations
                 name: "IX_Records_URLId",
                 table: "Records",
                 column: "URLId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_URLs_SecretUrl",
+                table: "URLs",
+                column: "SecretUrl",
+                unique: true);
         }
 
         /// <inheritdoc />

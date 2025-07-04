@@ -66,7 +66,7 @@ namespace URLShortenerApp.Helpers
 				return NormalizeStructure(httpUrl);
 			}
 
-			throw new Exception("URL is not reachable over HTTP or HTTPS.");
+			throw new Exception("The URL is not reachable over HTTP or HTTPS. Please enter a valid URL.");
 		}
 
 		/// <summary>
@@ -104,13 +104,19 @@ namespace URLShortenerApp.Helpers
 			try
 			{
 				// Sending a lightweight HEAD request to a remote server.
-				var request = new HttpRequestMessage(HttpMethod.Head, url);
+				var request = new HttpRequestMessage(HttpMethod.Get, url);
+				// Setting a user agent to avoid being blocked by some servers.
+				request.Headers.UserAgent.ParseAdd("Mozilla/5.0 (compatible; UrlChecker/1.0)");
+
 				// A response from the web server that hosts the requested domain.
 				var response = await _httpClient.SendAsync(request);
 
+				// Sending a GET request if HEAD request is not allowed.
 				if (!response.IsSuccessStatusCode && response.StatusCode == HttpStatusCode.MethodNotAllowed)
 				{
 					request = new HttpRequestMessage(HttpMethod.Get, url);
+					request.Headers.UserAgent.ParseAdd("Mozilla/5.0 (compatible; UrlChecker/1.0)");
+
 					response = await _httpClient.SendAsync(request);
 				}
 

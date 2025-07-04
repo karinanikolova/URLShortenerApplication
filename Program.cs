@@ -1,3 +1,5 @@
+using Microsoft.EntityFrameworkCore;
+using URLShortenerApp.Data;
 using URLShortenerApp.Services.Contracts;
 
 namespace URLShortenerApp
@@ -38,8 +40,34 @@ namespace URLShortenerApp
 			app.UseAuthorization();
 
 			app.MapControllerRoute(
+				name: "shortened",
+				pattern: "{shortenedUrl}",
+				defaults: new { controller = "Redirect", action = "RedirectTo" });
+
+			app.MapControllerRoute(
 				name: "default",
 				pattern: "{controller=Home}/{action=Index}/{id?}");
+
+			// Applying database migrations before starting the application.
+			using (var scope = app.Services.CreateScope())
+			{
+				var services = scope.ServiceProvider;
+
+				try
+				{
+					var dbContext = services.GetRequiredService<AppDbContext>();
+
+					if (dbContext.Database.IsRelational())
+					{
+						await dbContext.Database.MigrateAsync();
+					}
+				}
+				catch (Exception ex)
+				{
+					var logger = services.GetRequiredService<ILogger<Program>>();
+					logger.LogError(ex, "An error occurred while applying database migrations.");
+				}
+			}
 
 			await app.RunAsync();
 		}

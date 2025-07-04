@@ -1,4 +1,4 @@
-<img alt="Static Badge" src="https://img.shields.io/badge/C%23-%23512BD4?style=plastic&logo=dotnet"> <img alt="Static Badge" src="https://img.shields.io/badge/ASP.NET_Core_MVC-%23512BD4?style=plastic"> <img alt="Static Badge" src="https://img.shields.io/badge/EF_Core-%23512BD4?style=plastic"> <img alt="Static Badge" src="https://img.shields.io/badge/SQL_Server-%23ef901c?style=plastic">
+﻿<img alt="Static Badge" src="https://img.shields.io/badge/C%23-%23512BD4?style=plastic&logo=dotnet"> <img alt="Static Badge" src="https://img.shields.io/badge/ASP.NET_Core_MVC-%23512BD4?style=plastic"> <img alt="Static Badge" src="https://img.shields.io/badge/EF_Core-%23512BD4?style=plastic"> <img alt="Static Badge" src="https://img.shields.io/badge/SQL_Server-%23ef901c?style=plastic">
 <img alt="GitHub License" src="https://img.shields.io/github/license/mashape/apistatus?style=plastic">
 
 # 🔗 URL Shortener Application
@@ -17,7 +17,7 @@ This is a web application that generates short versions of HTTP links with track
 - A public short URL that redirects to the original URL
 - A secret stats URL that displays analytics for that short link
 
-The system tracks and stores each URL access, including the user's IP address, and ensures that the secret stats URL is secure and difficult to guess. Statistics are recorded asynchronously to ensure a fast and responsive user experience.
+A length restriction and format validation ensure that the provided URL is valid. The public short URL tracks and stores each URL access, including the user's IP address. Statistics are recorded asynchronously to ensure a fast and responsive user experience. The generated secret stats URL is secure and difficult to guess.
 
 ### Statistics Provided
 - Unique visits per day (each IP is counted once per day)
@@ -27,10 +27,13 @@ The system tracks and stores each URL access, including the user's IP address, a
 ### Technologies Used
 - .NET 8 / ASP.NET Core MVC
 - Entity Framework Core with SQL Server (relational database)
-- Dependency Injection for service architecture
-- Background service for asynchronous logging (UrlAccessLoggingService)
+- Dependency Injection to implement service architecture
+- Background service (UrlAccessLoggingService) for asynchronous logging 
 - [jsDelivr](https://www.jsdelivr.com/) - a free CDN used to deliver Chart.js for visualizations
 - Bootstrap for UI styling
+
+### Tools
+- Postman for testing client IP address retrieval via the "X-Forwarded-For" header in GET requests
 
 ### Project Structure
 📁 Directories:
@@ -47,7 +50,7 @@ The system tracks and stores each URL access, including the user's IP address, a
 - Views - Contains Razor views for URL input, error display, and statistics
 
 ## 📦 Prerequisites
-- An IDE((e.g., Visual Studio 2022+ or Visual Studio Code))
+- An IDE (e.g., Visual Studio 2022+ or Visual Studio Code)
 - .NET 8 SDK
 - MS SQL Server with a client tool (e.g., SQL Server Management Studio or the MSSQL extension for Visual Studio Code)
 

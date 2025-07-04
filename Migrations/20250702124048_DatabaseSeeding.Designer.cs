@@ -12,8 +12,8 @@ using URLShortenerApp.Data;
 namespace URLShortenerApp.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250626123926_DatabaseSeed")]
-    partial class DatabaseSeed
+    [Migration("20250702124048_DatabaseSeeding")]
+    partial class DatabaseSeeding
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -56,91 +56,91 @@ namespace URLShortenerApp.Migrations
                         new
                         {
                             Id = new Guid("86739286-18d5-4f31-85b6-f6d824108650"),
-                            AccessDate = new DateTime(2025, 6, 26, 12, 39, 25, 984, DateTimeKind.Utc).AddTicks(6583),
+                            AccessDate = new DateTime(2025, 7, 2, 12, 40, 48, 458, DateTimeKind.Utc).AddTicks(4947),
                             URLId = new Guid("e244bc69-5e82-4cdc-aabf-69a7c620d282"),
                             UserIPAddress = "165.122.32.209"
                         },
                         new
                         {
                             Id = new Guid("e2723ab2-6c56-43e4-b594-a59f9a3b9006"),
-                            AccessDate = new DateTime(2025, 6, 16, 12, 39, 25, 984, DateTimeKind.Utc).AddTicks(7305),
+                            AccessDate = new DateTime(2025, 6, 22, 12, 40, 48, 458, DateTimeKind.Utc).AddTicks(5654),
                             URLId = new Guid("e244bc69-5e82-4cdc-aabf-69a7c620d282"),
                             UserIPAddress = "165.122.32.209"
                         },
                         new
                         {
                             Id = new Guid("8b91667d-031a-4c26-8817-a4c05fbca351"),
-                            AccessDate = new DateTime(2025, 6, 23, 12, 39, 25, 984, DateTimeKind.Utc).AddTicks(7308),
+                            AccessDate = new DateTime(2025, 6, 29, 12, 40, 48, 458, DateTimeKind.Utc).AddTicks(5656),
                             URLId = new Guid("e244bc69-5e82-4cdc-aabf-69a7c620d282"),
                             UserIPAddress = "119.240.93.167"
                         },
                         new
                         {
                             Id = new Guid("149c2f2c-14ec-4169-bb66-7e8c014c78ac"),
-                            AccessDate = new DateTime(2025, 6, 25, 12, 39, 25, 984, DateTimeKind.Utc).AddTicks(7309),
+                            AccessDate = new DateTime(2025, 7, 1, 12, 40, 48, 458, DateTimeKind.Utc).AddTicks(5657),
                             URLId = new Guid("e244bc69-5e82-4cdc-aabf-69a7c620d282"),
                             UserIPAddress = "165.122.32.209"
                         },
                         new
                         {
                             Id = new Guid("37898beb-b7b7-4398-ab01-96596bedee10"),
-                            AccessDate = new DateTime(2025, 6, 17, 12, 39, 25, 984, DateTimeKind.Utc).AddTicks(7310),
+                            AccessDate = new DateTime(2025, 6, 23, 12, 40, 48, 458, DateTimeKind.Utc).AddTicks(5658),
                             URLId = new Guid("e244bc69-5e82-4cdc-aabf-69a7c620d282"),
                             UserIPAddress = "1.225.63.20"
                         },
                         new
                         {
                             Id = new Guid("8f55796e-b0dd-451e-a22e-8335af736b6d"),
-                            AccessDate = new DateTime(2025, 6, 11, 12, 39, 25, 984, DateTimeKind.Utc).AddTicks(7314),
+                            AccessDate = new DateTime(2025, 6, 17, 12, 40, 48, 458, DateTimeKind.Utc).AddTicks(5662),
                             URLId = new Guid("f2fd801f-6493-4a93-a9fa-1829c8ac21fd"),
                             UserIPAddress = "215.148.253.91"
                         },
                         new
                         {
                             Id = new Guid("1f034183-ec79-4ea2-a0c1-8bd47967efff"),
-                            AccessDate = new DateTime(2025, 6, 19, 12, 39, 25, 984, DateTimeKind.Utc).AddTicks(7316),
+                            AccessDate = new DateTime(2025, 6, 25, 12, 40, 48, 458, DateTimeKind.Utc).AddTicks(5663),
                             URLId = new Guid("f2fd801f-6493-4a93-a9fa-1829c8ac21fd"),
                             UserIPAddress = "165.122.32.209"
                         },
                         new
                         {
                             Id = new Guid("d1c80305-ec15-4a89-b96a-b8a4dd259959"),
-                            AccessDate = new DateTime(2025, 6, 24, 12, 39, 25, 984, DateTimeKind.Utc).AddTicks(7317),
+                            AccessDate = new DateTime(2025, 6, 30, 12, 40, 48, 458, DateTimeKind.Utc).AddTicks(5663),
                             URLId = new Guid("f2fd801f-6493-4a93-a9fa-1829c8ac21fd"),
                             UserIPAddress = "165.218.50.241"
                         },
                         new
                         {
                             Id = new Guid("8f602fd7-869a-484a-9cf2-6f41d4dacbad"),
-                            AccessDate = new DateTime(2025, 6, 25, 12, 39, 25, 984, DateTimeKind.Utc).AddTicks(7318),
+                            AccessDate = new DateTime(2025, 7, 1, 12, 40, 48, 458, DateTimeKind.Utc).AddTicks(5664),
                             URLId = new Guid("f2fd801f-6493-4a93-a9fa-1829c8ac21fd"),
                             UserIPAddress = "215.148.253.91"
                         },
                         new
                         {
                             Id = new Guid("e13642b1-c894-41d3-acc9-8211e8a2ba8b"),
-                            AccessDate = new DateTime(2025, 6, 6, 12, 39, 25, 984, DateTimeKind.Utc).AddTicks(7320),
+                            AccessDate = new DateTime(2025, 6, 12, 12, 40, 48, 458, DateTimeKind.Utc).AddTicks(5667),
                             URLId = new Guid("19cbaea2-e65e-4931-8c25-685708d7f4c8"),
                             UserIPAddress = "119.240.93.167"
                         },
                         new
                         {
                             Id = new Guid("fad2151d-5e15-4b6c-9db3-fd9149217e7e"),
-                            AccessDate = new DateTime(2025, 6, 1, 12, 39, 25, 984, DateTimeKind.Utc).AddTicks(7321),
+                            AccessDate = new DateTime(2025, 6, 7, 12, 40, 48, 458, DateTimeKind.Utc).AddTicks(5668),
                             URLId = new Guid("19cbaea2-e65e-4931-8c25-685708d7f4c8"),
                             UserIPAddress = "165.218.50.241"
                         },
                         new
                         {
                             Id = new Guid("1eaa56a1-99c6-4c5c-8351-58f03a381c47"),
-                            AccessDate = new DateTime(2025, 6, 21, 12, 39, 25, 984, DateTimeKind.Utc).AddTicks(7322),
+                            AccessDate = new DateTime(2025, 6, 27, 12, 40, 48, 458, DateTimeKind.Utc).AddTicks(5669),
                             URLId = new Guid("19cbaea2-e65e-4931-8c25-685708d7f4c8"),
                             UserIPAddress = "128.181.26.173"
                         },
                         new
                         {
                             Id = new Guid("6051d816-2a0c-439f-90ac-cba5b7d913df"),
-                            AccessDate = new DateTime(2025, 6, 25, 12, 39, 25, 984, DateTimeKind.Utc).AddTicks(7323),
+                            AccessDate = new DateTime(2025, 7, 1, 12, 40, 48, 458, DateTimeKind.Utc).AddTicks(5670),
                             URLId = new Guid("19cbaea2-e65e-4931-8c25-685708d7f4c8"),
                             UserIPAddress = "165.122.32.209"
                         });
@@ -163,15 +163,21 @@ namespace URLShortenerApp.Migrations
                         .HasColumnType("nvarchar(2048)")
                         .HasComment("Original URL");
 
+                    b.Property<string>("SecretUrl")
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)")
+                        .HasComment("Secret URL");
+
                     b.Property<string>("ShortenedUrl")
                         .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)")
+                        .HasMaxLength(6)
+                        .HasColumnType("nvarchar(6)")
                         .HasComment("Shortened URL");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ShortenedUrl")
+                    b.HasIndex("SecretUrl")
                         .IsUnique();
 
                     b.ToTable("URLs");
@@ -180,23 +186,26 @@ namespace URLShortenerApp.Migrations
                         new
                         {
                             Id = new Guid("e244bc69-5e82-4cdc-aabf-69a7c620d282"),
-                            CreationDate = new DateTime(2025, 6, 1, 12, 39, 25, 984, DateTimeKind.Utc).AddTicks(1025),
+                            CreationDate = new DateTime(2025, 6, 7, 12, 40, 48, 457, DateTimeKind.Utc).AddTicks(9413),
                             OriginalUrl = "https://www.progress.com/",
-                            ShortenedUrl = "NlptN4Bw1P"
+                            SecretUrl = "NlptN4Bw1P",
+                            ShortenedUrl = "2af135"
                         },
                         new
                         {
                             Id = new Guid("f2fd801f-6493-4a93-a9fa-1829c8ac21fd"),
-                            CreationDate = new DateTime(2025, 5, 27, 12, 39, 25, 984, DateTimeKind.Utc).AddTicks(1358),
-                            OriginalUrl = "https://www.dev.bg/company/progress/",
-                            ShortenedUrl = "BtGWzHZ96t"
+                            CreationDate = new DateTime(2025, 6, 2, 12, 40, 48, 457, DateTimeKind.Utc).AddTicks(9825),
+                            OriginalUrl = "https://www.dev.bg/",
+                            SecretUrl = "BtGWzHZ96t",
+                            ShortenedUrl = "9329e2"
                         },
                         new
                         {
                             Id = new Guid("19cbaea2-e65e-4931-8c25-685708d7f4c8"),
-                            CreationDate = new DateTime(2025, 5, 22, 12, 39, 25, 984, DateTimeKind.Utc).AddTicks(1363),
+                            CreationDate = new DateTime(2025, 5, 28, 12, 40, 48, 457, DateTimeKind.Utc).AddTicks(9831),
                             OriginalUrl = "https://www.telerik.com/",
-                            ShortenedUrl = "X9k2v3Q8yF"
+                            SecretUrl = "X9k2v3Q8yF",
+                            ShortenedUrl = "9c13ca"
                         });
                 });
 

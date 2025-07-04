@@ -21,6 +21,11 @@ namespace URLShortenerApp.Data.Models
 		public string ShortenedUrl { get; set; }
 
 		[Required]
+		[MaxLength(SecretUrlMaxLength)]
+		[Comment("Secret URL")]
+		public string SecretUrl { get; set; }
+
+		[Required]
 		[Comment("URL creation date")]
 		public DateTime CreationDate { get; set; }
 

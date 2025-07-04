@@ -8,7 +8,9 @@
 			public const int OriginalUrlMaxLength = 2048;
 			public const int OriginalUrlMinLength = 5;
 
-			public const int ShortenedUrlMaxLength = 20;
+			public const int ShortenedUrlMaxLength = 6;
+
+			public const int SecretUrlMaxLength = 10;
 		}
 
 		public static class  Record
