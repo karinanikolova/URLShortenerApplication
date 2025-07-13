@@ -12,6 +12,6 @@ namespace URLShortenerApp.Models.URL
 		[ValidUrl]
 		public string Url { get; set; }
 
-		public DateTime CreationDate { get; set; } = DateTime.UtcNow;
+		public DateTime CreationDate { get; set; } = DateTime.UtcNow.Date;
 	}
 }
