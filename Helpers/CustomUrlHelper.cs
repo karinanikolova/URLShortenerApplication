@@ -1,5 +1,4 @@
-﻿using System.Net;
-using URLShortenerApp.Helpers.Contracts;
+﻿using URLShortenerApp.Helpers.Contracts;
 
 namespace URLShortenerApp.Helpers
 {
@@ -26,47 +25,14 @@ namespace URLShortenerApp.Helpers
 			if (!inputUrl.StartsWith("http://", StringComparison.OrdinalIgnoreCase) &&
 				!inputUrl.StartsWith("https://", StringComparison.OrdinalIgnoreCase))
 			{
-				if (!inputUrl.StartsWith("www.", StringComparison.OrdinalIgnoreCase))
-				{
-					inputUrl = "https://www." + inputUrl;
-				}
-				else
-				{
-					inputUrl = "https://" + inputUrl;
-				}
-			}
-			else
-			{
-				if (!inputUrl.Contains("www.", StringComparison.OrdinalIgnoreCase))
-				{
-					if (inputUrl.Contains("http://", StringComparison.OrdinalIgnoreCase))
-					{
-						inputUrl = inputUrl.Replace("http://", "https://www.");
-
-					}
-					else
-					{
-						inputUrl = inputUrl.Replace("https://", "https://www.");
-					}
-				}
+				inputUrl = "https://" + inputUrl;
 			}
 
 			var uri = new Uri(inputUrl);
 
-			var httpsUrl = new UriBuilder(uri) { Scheme = Uri.UriSchemeHttps }.Uri.ToString();
-			var httpUrl = new UriBuilder(uri) { Scheme = Uri.UriSchemeHttp }.Uri.ToString();
+			var httpsUrl = new UriBuilder(uri) { Scheme = uri.Scheme }.Uri.ToString();
 
-			if (await UrlExistsAsync(httpsUrl))
-			{
-				return NormalizeStructure(httpsUrl);
-			}
-
-			if (await UrlExistsAsync(httpUrl))
-			{
-				return NormalizeStructure(httpUrl);
-			}
-
-			throw new Exception("The URL is not reachable over HTTP or HTTPS. Please enter a valid URL.");
+			return NormalizeStructure(httpsUrl);
 		}
 
 		/// <summary>
@@ -92,40 +58,6 @@ namespace URLShortenerApp.Helpers
 			}
 
 			return builder.Uri.ToString();
-		}
-
-		/// <summary>
-		/// Checks if the URL exists by sending a HEAD request.
-		/// </summary>
-		/// <param name="url"></param>
-		/// <returns></returns>
-		private async Task<bool> UrlExistsAsync(string url)
-		{
-			try
-			{
-				// Sending a lightweight HEAD request to a remote server.
-				var request = new HttpRequestMessage(HttpMethod.Get, url);
-				// Setting a user agent to avoid being blocked by some servers.
-				request.Headers.UserAgent.ParseAdd("Mozilla/5.0 (compatible; UrlChecker/1.0)");
-
-				// A response from the web server that hosts the requested domain.
-				var response = await _httpClient.SendAsync(request);
-
-				// Sending a GET request if HEAD request is not allowed.
-				if (!response.IsSuccessStatusCode && response.StatusCode == HttpStatusCode.MethodNotAllowed)
-				{
-					request = new HttpRequestMessage(HttpMethod.Get, url);
-					request.Headers.UserAgent.ParseAdd("Mozilla/5.0 (compatible; UrlChecker/1.0)");
-
-					response = await _httpClient.SendAsync(request);
-				}
-
-				return response.IsSuccessStatusCode;
-			}
-			catch
-			{
-				return false;
-			}
 		}
 	}
 }
