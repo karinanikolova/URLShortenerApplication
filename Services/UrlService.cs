@@ -60,7 +60,8 @@ namespace URLShortenerApp.Services
 
 			var top10Users = recordViewModels
 				.GroupBy(r => r.UserIPAddress)
-				.Select(r => new IpVisitSummaryViewModel() {
+				.Select(r => new IpVisitSummaryViewModel()
+				{
 					UserIPAddress = r.Key,
 					VisitsCount = r.Count()
 				})
@@ -77,7 +78,7 @@ namespace URLShortenerApp.Services
 
 		public async Task<URLViewModel> GetUrlViewModelByUrlAndCreationDateAsync(string url, DateTime creationDate) =>
 			await _repository.AllReadOnly<URL>()
-				.Where(u => u.OriginalUrl == url && u.CreationDate == creationDate)
+				.Where(u => u.OriginalUrl == url && u.CreationDate.Date == creationDate)
 				.Select(u => new URLViewModel()
 				{
 					OriginalUrl = u.OriginalUrl,
@@ -109,8 +110,15 @@ namespace URLShortenerApp.Services
 				URLId = urlId
 			};
 
-			await _repository.AddAsync<Record>(record);
-			await _repository.SaveChangesAsync();
+			try
+			{
+				await _repository.AddAsync<Record>(record);
+				await _repository.SaveChangesAsync();
+			}
+			catch (DbUpdateException ex)
+			{
+				Console.Error.WriteLine($"Error recording URL access: {ex.Message}");
+			}
 		}
 
 		public async Task<Guid> GetUrlIdByShortenedUrlAsync(string shortenedUrl) =>
