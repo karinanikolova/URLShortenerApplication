@@ -46,26 +46,26 @@ namespace URLShortenerApp.Data.Configuration
 				new()
 				{
 					Id = FirstURLId,
-					OriginalUrl = "https://www.progress.com/",
+					OriginalUrl = "https://learn.microsoft.com/en-us/dotnet/csharp/",
 					ShortenedUrl = "2af135",
 					SecretUrl = "NlptN4Bw1P",
-					CreationDate = DateTime.UtcNow.AddDays(-25)
+					CreationDate = DateTime.UtcNow.Date.AddDays(-25)
 				},
 				new()
 				{
 					Id = SecondURLId,
-					OriginalUrl = "https://www.dev.bg/",
+					OriginalUrl = "https://dev.bg/",
 					ShortenedUrl = "9329e2",
 					SecretUrl = "BtGWzHZ96t",
-					CreationDate = DateTime.UtcNow.AddDays(-30)
+					CreationDate = DateTime.UtcNow.Date.AddDays(-30)
 				},
 				new()
 				{
 					Id = ThirdURLId,
-					OriginalUrl = "https://www.telerik.com/",
+					OriginalUrl = "https://developer.mozilla.org/en-US/",
 					ShortenedUrl = "9c13ca",
 					SecretUrl = "X9k2v3Q8yF",
-					CreationDate = DateTime.UtcNow.AddDays(-35)
+					CreationDate = DateTime.UtcNow.Date.AddDays(-35)
 				}
 			});
 		}
@@ -78,90 +78,90 @@ namespace URLShortenerApp.Data.Configuration
 				new()
 				{
 					Id = FirstRecordId,
-					AccessDate = DateTime.UtcNow,
+					AccessDate = DateTime.UtcNow.Date,
 					UserIPAddress = "165.122.32.209",
 					URLId = FirstURLId
 				},
 				new()
 				{
 					Id = SecondRecordId,
-					AccessDate = DateTime.UtcNow.AddDays(-10),
+					AccessDate = DateTime.UtcNow.Date.AddDays(-10),
 					UserIPAddress = "165.122.32.209",
 					URLId = FirstURLId
 				},
 				new()
 				{
 					Id = ThirdRecordId,
-					AccessDate = DateTime.UtcNow.AddDays(-3),
+					AccessDate = DateTime.UtcNow.Date.AddDays(-3),
 					UserIPAddress = "119.240.93.167",
 					URLId = FirstURLId
 				},
 				new()
 				{
 					Id = FourthRecordId,
-					AccessDate = DateTime.UtcNow.AddDays(-1),
+					AccessDate = DateTime.UtcNow.Date.AddDays(-1),
 					UserIPAddress = "165.122.32.209",
 					URLId = FirstURLId
 				},
 				new()
 				{
 					Id = FifthRecordId,
-					AccessDate = DateTime.UtcNow.AddDays(-9),
+					AccessDate = DateTime.UtcNow.Date.AddDays(-9),
 					UserIPAddress = "1.225.63.20",
 					URLId = FirstURLId
 				},
 				new()
 				{
 					Id = SixthRecordId,
-					AccessDate = DateTime.UtcNow.AddDays(-15),
+					AccessDate = DateTime.UtcNow.Date.AddDays(-15),
 					UserIPAddress = "215.148.253.91",
 					URLId = SecondURLId
 				},
 				new()
 				{
 					Id = SeventhRecordId,
-					AccessDate = DateTime.UtcNow.AddDays(-7),
+					AccessDate = DateTime.UtcNow.Date.AddDays(-7),
 					UserIPAddress = "165.122.32.209",
 					URLId = SecondURLId
 				},new()
 				{
 					Id = EighthRecordId,
-					AccessDate = DateTime.UtcNow.AddDays(-2),
+					AccessDate = DateTime.UtcNow.Date.AddDays(-2),
 					UserIPAddress = "165.218.50.241",
 					URLId = SecondURLId
 				},
 				new()
 				{
 					Id = NinethRecordId,
-					AccessDate = DateTime.UtcNow.AddDays(-1),
+					AccessDate = DateTime.UtcNow.Date.AddDays(-1),
 					UserIPAddress = "215.148.253.91",
 					URLId = SecondURLId
 				},
 				new()
 				{
 					Id = TenthRecordId,
-					AccessDate = DateTime.UtcNow.AddDays(-20),
+					AccessDate = DateTime.UtcNow.Date.AddDays(-20),
 					UserIPAddress = "119.240.93.167",
 					URLId = ThirdURLId
 				},
 				new()
 				{
 					Id = EleventhRecordId,
-					AccessDate = DateTime.UtcNow.AddDays(-25),
+					AccessDate = DateTime.UtcNow.Date.AddDays(-25),
 					UserIPAddress = "165.218.50.241",
 					URLId = ThirdURLId
 				},
 				new()
 				{
 					Id = TwelvethRecordId,
-					AccessDate = DateTime.UtcNow.AddDays(-5),
+					AccessDate = DateTime.UtcNow.Date.AddDays(-5),
 					UserIPAddress = "128.181.26.173",
 					URLId = ThirdURLId
 				},
 				new()
 				{
 					Id = ThirteenthRecordId,
-					AccessDate = DateTime.UtcNow.AddDays(-1),
+					AccessDate = DateTime.UtcNow.Date.AddDays(-1),
 					UserIPAddress = "165.122.32.209",
 					URLId = ThirdURLId
 				}
