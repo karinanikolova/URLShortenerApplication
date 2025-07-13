@@ -35,13 +35,13 @@ namespace URLShortenerApp.Controllers
 
 			var userIpAddress = IpAddressHelper.GetUserIpAddress(HttpContext);
 
-			if (await _urlService.HasUrlOpenBeenRecordedTodayAsync(urlId, userIpAddress, DateTime.UtcNow) == false)
+			if (await _urlService.HasUrlOpenBeenRecordedTodayAsync(urlId, userIpAddress, DateTime.UtcNow.Date) == false)
 			{
 				_accessQueue.Enqueue(new UrlAccessLogDto()
 				{
 					URLId = urlId,
 					UserIPAddress = userIpAddress,
-					AccessDate = DateTime.UtcNow
+					AccessDate = DateTime.UtcNow.Date
 				});
 			}
 
