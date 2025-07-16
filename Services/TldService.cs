@@ -7,19 +7,21 @@ namespace URLShortenerApp.Services
 	/// </summary>
 	public class TldService : ITldService
 	{
-		private const string ianaTldUrl = "https://data.iana.org/TLD/tlds-alpha-by-domain.txt";
-
+		private readonly ITldProvider _tldProvider;
 		private readonly HashSet<string> _validTlds = new();
+
+		public TldService(ITldProvider tldProvider)
+		{
+			_tldProvider = tldProvider;
+		}
 
 		public IReadOnlyCollection<string> ValidTlds => _validTlds;
 
 		public async Task InitializeAsync()
 		{
-			using var httpClient = new HttpClient();
+			var tldsContent = await _tldProvider.GetTldsAsync();
 
-			string content = await httpClient.GetStringAsync(ianaTldUrl);
-
-			var tlds = content
+			var tlds = tldsContent
 				.Split('\n')
 				.Where(line => !string.IsNullOrWhiteSpace(line) && !line.StartsWith("#"))
 				.Select(line => line.Trim().ToLower());
