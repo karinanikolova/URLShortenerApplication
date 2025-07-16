@@ -35,8 +35,8 @@ A length restriction and format validation ensure that the provided URL is valid
 ### Tools
 - Postman for testing client IP address retrieval via the "X-Forwarded-For" header in GET requests
 
-### Project Structure
-📁 Directories:
+### Solution Structure
+📁 URLShortenerApp Directories:
 - BackgroundServices - Contains a DTO for temporarily storing URL access information, a queue for handling log DTOs, and a background service for asynchronous logging
 - Constants - Contains application-wide constants
 - Controllers - Contains MVC controllers
@@ -48,6 +48,10 @@ A length restriction and format validation ensure that the provided URL is valid
 - Services - Contains business logic and service interfaces
 - Validation - Contains a custom URL validation attribute and a custom route constraint for short URL validation
 - Views - Contains Razor views for URL input, error display, and statistics
+
+📁 URLShortenerApp.Tests Directories:
+- Mocks - Contains a database mock for testing purposes
+- Tests - Contains unit tests for the application services
 
 ## 📦 Prerequisites
 - An IDE (e.g., Visual Studio 2022+ or Visual Studio Code)
