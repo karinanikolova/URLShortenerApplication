@@ -10,7 +10,6 @@ namespace URLShortenerApp.Tests.UnitTests
 	/// <summary>
 	/// Unit tests for the UrlService class.
 	/// </summary>
-
 	[TestFixture]
 	public class UrlServiceTests : UnitTestsBase
 	{
@@ -28,7 +27,7 @@ namespace URLShortenerApp.Tests.UnitTests
 		public async Task AddUrlAsync_ShouldAddUrlSuccessfully()
 		{
 			var url = "https://example.com";
-			var creationDate = DateTime.UtcNow;
+			var creationDate = DateTime.UtcNow.Date;
 
 			await _urlService.AddUrlAsync(url, creationDate);
 
