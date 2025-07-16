@@ -31,6 +31,7 @@ namespace Microsoft.Extensions.DependencyInjection
 			// Adding custom services to the Inversion of Control container.
 			services.AddScoped<IUrlService, UrlService>();
 
+			services.AddSingleton<ITldProvider, IanaTldProvider>();
 			services.AddSingleton<ITldService, TldService>();
 			services.AddSingleton<IUrlAccessQueue, UrlAccessQueue>();
 
