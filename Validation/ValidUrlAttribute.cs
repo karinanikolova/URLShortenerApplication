@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Text.RegularExpressions;
 using URLShortenerApp.Services.Contracts;
 
 namespace URLShortenerApp.Validation
@@ -16,6 +17,13 @@ namespace URLShortenerApp.Validation
 			}
 
 			var input = value.ToString().Trim();
+
+			var regex = new Regex(@"[""<>\^`{\|} ]+");
+
+			if (regex.IsMatch(input))
+			{
+				return new ValidationResult("The URL contains one or more of the following unsupported characters: \", <, >, ^, `, {, |, }, (whitespace character).");
+			}
 
 			if (!input.StartsWith("http://", StringComparison.OrdinalIgnoreCase) && !input.StartsWith("https://", StringComparison.OrdinalIgnoreCase))
 			{
