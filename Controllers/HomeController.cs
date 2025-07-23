@@ -40,7 +40,7 @@ namespace URLShortenerApp.Controllers
 
 			try
 			{
-				normalizedUrl = await _customUrlHelper.Normalize(model.Url);
+				normalizedUrl = await _customUrlHelper.Normalize(model.Url.Trim());
 			}
 			catch (Exception ex)
 			{
